@@ -6,5 +6,18 @@ services:
 before_install:
   - docker build -t dogliy/react-app -f ./Dockerfile.dev .
 
-success:
+script:
   - docker run -e CI=true dogliy/react-app npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "eu-west-1"
+  app: "react-app"
+  env: "Reactapp-env"
+  bucket_name: "elasticbeanstalk-eu-west-1-745665539209"
+  bucket_path: "react-app"
+  access_key_id: "$AWS_ACCESS_ID"
+  secret_access_key: "$AWS_SECRET_ACCESS_KEY"
+    
+
+
